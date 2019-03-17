@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-// import data from './data.json';
+
+// Not so sure about the patternfly version I'm using the 3 or the 4 ?
+// following https://github.com/patternfly/patternfly-react/blob/master/packages/patternfly-4/react-core/README.md
+// and https://patternfly-react.surge.sh/patternfly-4/components/checkbox
+import '@patternfly/react-core/dist/styles/base.css';
+import { Form, FormGroup, ActionGroup, TextInput, Button} from '@patternfly/react-core';
 
 class Event extends React.Component {
     render() {
@@ -33,23 +38,32 @@ class ListEvents extends React.Component {
 }
 
 class SelectIdForm extends React.Component {
-    handleChange = (event) => {
-        this.props.onInputChange(event);
+    handleChange = (value) => {
+        console.log("On change: " + value);
+        this.props.onInputChange(value);
     }
 
     handleSubmit = (event) => {
+        console.log("On submit: " + event);
         this.props.onInputSubmit(event);
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    GitHub ID:
-                <input type="text" onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+            <FormGroup
+                label="Required GitHub username"
+                isRequired
+                helperText="Please provide the GitHub username"
+            >
+                <TextInput
+                    type="text"
+                    onChange={this.handleChange} />
+            </FormGroup>
+            <ActionGroup>
+                <Button>Submit</Button>
+            </ActionGroup>
+            </Form>
         );
     }
 }
@@ -64,8 +78,8 @@ class GitHubUserHistory extends React.Component {
         };
     }
 
-    handleInputChange = (event) => {
-        const value = event.target.value;
+    handleInputChange = (input_value) => {
+        const value = input_value;
         this.setState(
             (prev_state, props) => ({ typed_github_id: value }));
     }
