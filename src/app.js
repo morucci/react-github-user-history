@@ -44,13 +44,15 @@ class SelectIdForm extends React.Component {
     }
 
     handleSubmit = (event) => {
-        this.props.onInputSubmit();
+        this.props.onInputSubmit(this.props.github_id);
         event.preventDefault();
     }
 
     render() {
+        // TextInput is complaining about missing value setting
+        // but what value should I give as the state is in Redux ?
         return (
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit} onClick={this.handleSubmit}>
                 <FormGroup
                     label="Required GitHub username"
                     isRequired
@@ -79,6 +81,7 @@ class App extends React.Component {
                     </CardHeader>
                     <CardBody>
                         <SelectIdForm
+                            github_id={this.props.github_id}
                             onInputChange={this.props.handleInputChange}
                             onInputSubmit={this.props.handleInputSubmit} />
                     </CardBody>
@@ -95,9 +98,9 @@ class App extends React.Component {
     }
 }
 
-const fetchHistory = (dispatch) => {
+const fetchHistory = (dispatch, github_id) => {
     return axios.get(
-        'https://api.github.com/users/morucci/events')
+        'https://api.github.com/users/'+ github_id  +'/events')
         .then(res => {
             dispatch({
                 type: 'INPUT_SUBMIT',
@@ -121,7 +124,7 @@ const mapDispatchToProps = dispatch => {
                 type: 'INPUT_CHANGE',
                 value: input_value
             }),
-        handleInputSubmit: (github_id) => fetchHistory(dispatch)
+        handleInputSubmit: (github_id) => fetchHistory(dispatch, github_id)
     }
 }
 
