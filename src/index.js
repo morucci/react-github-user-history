@@ -6,16 +6,18 @@ import axios from 'axios';
 // following https://github.com/patternfly/patternfly-react/blob/master/packages/patternfly-4/react-core/README.md
 // and https://patternfly-react.surge.sh/patternfly-4/components/checkbox
 import '@patternfly/react-core/dist/styles/base.css';
-import { Form, FormGroup, ActionGroup, TextInput, Button} from '@patternfly/react-core';
+import { Form, FormGroup, ActionGroup, TextInput, Button } from '@patternfly/react-core';
+import { Title, Card, CardHeader, CardBody } from '@patternfly/react-core';
+import { List, ListItem } from '@patternfly/react-core';
 
 class Event extends React.Component {
     render() {
         return (
-            <li>
+            <ListItem>
                 Event: ID: {this.props.event.id},
                 Type: {this.props.event.type},
                 Repo: {this.props.event.repo.name}
-            </li>
+            </ListItem>
         );
     }
 }
@@ -23,16 +25,16 @@ class Event extends React.Component {
 class ListEvents extends React.Component {
     render() {
         return (
-            <div>
-                <h2>GitHub ID: {this.props.github_id}</h2>
-                <ul>
+            <React.Fragment>
+                <Title size="md">GitHub ID: {this.props.github_id}</Title>
+                <List>
                     {this.props.history.map(
                         (event) => <Event
                             key={event.id}
                             event={event} />)
                     }
-                </ul>
-            </div>
+                </List>
+            </React.Fragment>
         );
     }
 }
@@ -51,18 +53,18 @@ class SelectIdForm extends React.Component {
     render() {
         return (
             <Form onSubmit={this.handleSubmit}>
-            <FormGroup
-                label="Required GitHub username"
-                isRequired
-                helperText="Please provide the GitHub username"
-            >
-                <TextInput
-                    type="text"
-                    onChange={this.handleChange} />
-            </FormGroup>
-            <ActionGroup>
-                <Button>Submit</Button>
-            </ActionGroup>
+                <FormGroup
+                    label="Required GitHub username"
+                    isRequired
+                    helperText="Please provide the GitHub username"
+                >
+                    <TextInput
+                        type="text"
+                        onChange={this.handleChange} />
+                </FormGroup>
+                <ActionGroup>
+                    <Button>Submit</Button>
+                </ActionGroup>
             </Form>
         );
     }
@@ -109,15 +111,25 @@ class GitHubUserHistory extends React.Component {
 
     render() {
         return (
-            <div className="history">
-                <h1>View 90 days history of a GitHub user</h1>
-                <SelectIdForm
-                    onInputChange={this.handleInputChange}
-                    onInputSubmit={this.handleInputSubmit} />
-                <ListEvents
-                    github_id={this.state.github_id}
-                    history={this.state.history} />
-            </div>
+            <React.Fragment>
+                <Card>
+                    <CardHeader>
+                        <Title size="lg">View 90 days history of a GitHub user</Title>
+                    </CardHeader>
+                    <CardBody>
+                        <SelectIdForm
+                            onInputChange={this.handleInputChange}
+                            onInputSubmit={this.handleInputSubmit} />
+                    </CardBody>
+                </Card>
+                <Card>
+                    <CardBody>
+                        <ListEvents
+                            github_id={this.state.github_id}
+                            history={this.state.history} />
+                    </CardBody>
+                </Card>
+            </React.Fragment>
         );
     }
 }
