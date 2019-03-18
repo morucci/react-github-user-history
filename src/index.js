@@ -1,140 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
+import { Provider } from "react-redux";
+import { createStore } from 'redux';
+import reducer from './store/reducer';
 
-// Not so sure about the patternfly version I'm using the 3 or the 4 ?
-// following https://github.com/patternfly/patternfly-react/blob/master/packages/patternfly-4/react-core/README.md
-// and https://patternfly-react.surge.sh/patternfly-4/components/checkbox
-import '@patternfly/react-core/dist/styles/base.css';
-import { Form, FormGroup, ActionGroup, TextInput, Button } from '@patternfly/react-core';
-import { Title, Card, CardHeader, CardBody } from '@patternfly/react-core';
-import { List, ListItem } from '@patternfly/react-core';
+import App from './app'
 
-class Event extends React.Component {
-    render() {
-        return (
-            <ListItem>
-                Event: ID: {this.props.event.id},
-                Type: {this.props.event.type},
-                Repo: {this.props.event.repo.name}
-            </ListItem>
-        );
-    }
-}
-
-class ListEvents extends React.Component {
-    render() {
-        return (
-            <React.Fragment>
-                <Title size="md">GitHub ID: {this.props.github_id}</Title>
-                <List>
-                    {this.props.history.map(
-                        (event) => <Event
-                            key={event.id}
-                            event={event} />)
-                    }
-                </List>
-            </React.Fragment>
-        );
-    }
-}
-
-class SelectIdForm extends React.Component {
-    handleChange = (value) => {
-        console.log("On change: " + value);
-        this.props.onInputChange(value);
-    }
-
-    handleSubmit = (event) => {
-        console.log("On submit: " + event);
-        this.props.onInputSubmit(event);
-    }
-
-    render() {
-        return (
-            <Form onSubmit={this.handleSubmit}>
-                <FormGroup
-                    label="Required GitHub username"
-                    isRequired
-                    helperText="Please provide the GitHub username"
-                >
-                    <TextInput
-                        type="text"
-                        onChange={this.handleChange} />
-                </FormGroup>
-                <ActionGroup>
-                    <Button>Submit</Button>
-                </ActionGroup>
-            </Form>
-        );
-    }
-}
-
-class GitHubUserHistory extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            typed_github_id: null,
-            github_id: null,
-            history: []
-        };
-    }
-
-    handleInputChange = (input_value) => {
-        const value = input_value;
-        this.setState(
-            (prev_state, props) => ({ typed_github_id: value }));
-    }
-
-    handleInputSubmit = (event) => {
-        const submitted = this.state.typed_github_id
-        this.setState(
-            (state, props) => {
-                // As setState is async I need to trigger fetchHistory here
-                // or outside the setState but by passing submitted.
-                // Not sure that the right way ?
-                this.fetchHistory(submitted);
-                return { github_id: submitted }
-            });
-        event.preventDefault();
-    }
-
-    fetchHistory = (github_id) => {
-        console.log('Fetching history for ' + github_id);
-        axios.get(
-            'https://api.github.com/users/' + github_id + '/events')
-            .then(res => {
-                const history = res.data;
-                this.setState((state, props) => ({ history: history }));
-            })
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <Card>
-                    <CardHeader>
-                        <Title size="lg">View 90 days history of a GitHub user</Title>
-                    </CardHeader>
-                    <CardBody>
-                        <SelectIdForm
-                            onInputChange={this.handleInputChange}
-                            onInputSubmit={this.handleInputSubmit} />
-                    </CardBody>
-                </Card>
-                <Card>
-                    <CardBody>
-                        <ListEvents
-                            github_id={this.state.github_id}
-                            history={this.state.history} />
-                    </CardBody>
-                </Card>
-            </React.Fragment>
-        );
-    }
-}
+const store = createStore(reducer);
 
 ReactDOM.render(
-    <GitHubUserHistory />,
-    document.getElementById('root'));
-
+    <Provider store={store}><App /></Provider>,
+    document.getElementById('root')
+);
