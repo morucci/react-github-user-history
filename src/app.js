@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from "react-redux";
-
-import axios from 'axios';
+import {connect} from "react-redux";
 
 import '@patternfly/react-core/dist/styles/base.css';
-import { Form, FormGroup, ActionGroup, TextInput, Button } from '@patternfly/react-core';
-import { Title, Card, CardHeader, CardBody } from '@patternfly/react-core';
-import { List, ListItem } from '@patternfly/react-core';
+import {Form, FormGroup, ActionGroup, TextInput, Button} from '@patternfly/react-core';
+import {Title, Card, CardHeader, CardBody} from '@patternfly/react-core';
+import {List, ListItem} from '@patternfly/react-core';
+
+import {fetchHistoryAction} from './reducer'
 
 class Event extends React.Component {
     render() {
@@ -24,7 +24,7 @@ class ListEvents extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Title size="md">GitHub ID: {this.props.github_id}</Title>
+                <Title size="md">GitHub ID: {this.props.typed_github_id}</Title>
                 <List>
                     {this.props.history.map(
                         (event) => <Event
@@ -52,7 +52,7 @@ class SelectIdForm extends React.Component {
         // TextInput is complaining about missing value setting
         // but what value should I give as the state is in Redux ?
         return (
-            <Form onSubmit={this.handleSubmit} onClick={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit}>
                 <FormGroup
                     label="Required GitHub username"
                     isRequired
@@ -65,7 +65,7 @@ class SelectIdForm extends React.Component {
                         onChange={this.handleChange} />
                 </FormGroup>
                 <ActionGroup>
-                    <Button variant="primary">Submit</Button>
+                    <Button variant="primary" onClick={this.handleSubmit}>Submit</Button>
                 </ActionGroup>
             </Form>
         );
@@ -90,23 +90,13 @@ class App extends React.Component {
                     <CardBody>
                         <ListEvents
                             github_id={this.props.github_id}
+                            typed_github_id={this.props.typed_github_id}
                             history={this.props.history} />
                     </CardBody>
                 </Card>
             </React.Fragment>
         );
     }
-}
-
-const fetchHistory = (dispatch, github_id) => {
-    return axios.get(
-        'https://api.github.com/users/'+ github_id  +'/events')
-        .then(res => {
-            dispatch({
-                type: 'INPUT_SUBMIT',
-                value: res.data
-            });
-        })
 }
 
 const mapStateToProps = state => {
@@ -124,7 +114,9 @@ const mapDispatchToProps = dispatch => {
                 type: 'INPUT_CHANGE',
                 value: input_value
             }),
-        handleInputSubmit: (github_id) => fetchHistory(dispatch, github_id)
+        handleInputSubmit: (github_id) => dispatch(
+            fetchHistoryAction(github_id)
+        )
     }
 }
 
