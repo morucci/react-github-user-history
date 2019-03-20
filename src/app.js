@@ -1,41 +1,13 @@
 import React from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import '@patternfly/react-core/dist/styles/base.css';
-import {Form, FormGroup, ActionGroup, TextInput, Button} from '@patternfly/react-core';
-import {Title, Card, CardHeader, CardBody} from '@patternfly/react-core';
-import {List, ListItem} from '@patternfly/react-core';
+import { Form, FormGroup, ActionGroup, TextInput, Button } from '@patternfly/react-core';
+import { Title, Card, CardHeader, CardBody } from '@patternfly/react-core';
+import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 
-import {fetchHistoryAction} from './reducer'
+import { fetchHistoryAction } from './reducer'
 
-class Event extends React.Component {
-    render() {
-        return (
-            <ListItem>
-                Event: ID: {this.props.event.id},
-                Type: {this.props.event.type},
-                Repo: {this.props.event.repo.name}
-            </ListItem>
-        );
-    }
-}
-
-class ListEvents extends React.Component {
-    render() {
-        return (
-            <React.Fragment>
-                <Title size="md">GitHub ID: {this.props.typed_github_id}</Title>
-                <List>
-                    {this.props.history.map(
-                        (event) => <Event
-                            key={event.id}
-                            event={event} />)
-                    }
-                </List>
-            </React.Fragment>
-        );
-    }
-}
 
 class SelectIdForm extends React.Component {
 
@@ -71,6 +43,25 @@ class SelectIdForm extends React.Component {
         );
     }
 }
+
+
+class EventsTable extends React.Component {
+    render() {
+        const columns = ['Event ID', 'Action Type', 'Repository']
+        const rows = this.props.history.map(
+            (e) => [e.id, e.type, e.repo.name])
+        return (
+            <React.Fragment>
+                <Title size="md">GitHub ID: {this.props.typed_github_id}</Title>
+                <Table caption="Simple Table" cells={columns} rows={rows}>
+                    <TableHeader />
+                    <TableBody />
+                </Table>
+            </React.Fragment>
+        );
+    }
+}
+
 class App extends React.Component {
     render() {
         return (
@@ -87,12 +78,9 @@ class App extends React.Component {
                     </CardBody>
                 </Card>
                 <Card>
-                    <CardBody>
-                        <ListEvents
-                            github_id={this.props.github_id}
-                            typed_github_id={this.props.typed_github_id}
-                            history={this.props.history} />
-                    </CardBody>
+                    <EventsTable
+                        typed_github_id={this.props.typed_github_id}
+                        history={this.props.history} />
                 </Card>
             </React.Fragment>
         );
