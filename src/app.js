@@ -5,6 +5,7 @@ import '@patternfly/react-core/dist/styles/base.css';
 import { Form, FormGroup, ActionGroup, TextInput, Button } from '@patternfly/react-core';
 import { Title, Card, CardHeader, CardBody } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
+import { Alert } from '@patternfly/react-core';
 
 import { fetchHistoryAction } from './reducer'
 
@@ -48,6 +49,14 @@ class SelectIdForm extends React.Component {
 
 class EventsTable extends React.Component {
     render() {
+        if ('status' in this.props.error_response) {
+            const message = "Unable to fetch history. Server returned " +
+                "status: " + this.props.error_response.status + " with " +
+                "message: " + this.props.error_response.statusText
+            return (
+                <Alert variant="info" title={message} />
+            )
+        }
         if (!this.props.typed_github_id) {
             return (<div></div>)
         }
@@ -83,6 +92,7 @@ class App extends React.Component {
                     <CardHeader></CardHeader>
                     <CardBody>
                         <EventsTable
+                            error_response={this.props.error_response}
                             typed_github_id={this.props.typed_github_id}
                             history={this.props.history} />
                     </CardBody>
@@ -96,7 +106,8 @@ const mapStateToProps = state => {
     return {
         github_id: state.github_id,
         typed_github_id: state.typed_github_id,
-        history: state.history
+        history: state.history,
+        error_response: state.error_response
     }
 }
 
