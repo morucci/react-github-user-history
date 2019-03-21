@@ -34,6 +34,7 @@ class SelectIdForm extends React.Component {
                     <TextInput
                         id="github-id"
                         type="text"
+                        value={this.props.github_id}
                         onChange={this.handleChange} />
                 </FormGroup>
                 <ActionGroup>
@@ -47,17 +48,18 @@ class SelectIdForm extends React.Component {
 
 class EventsTable extends React.Component {
     render() {
+        if (!this.props.typed_github_id) {
+            return (<div></div>)
+        }
+        const caption = "History of user " + this.props.typed_github_id
         const columns = ['Event ID', 'Action Type', 'Repository']
         const rows = this.props.history.map(
             (e) => [e.id, e.type, e.repo.name])
         return (
-            <React.Fragment>
-                <Title size="md">GitHub ID: {this.props.typed_github_id}</Title>
-                <Table caption="Simple Table" cells={columns} rows={rows}>
-                    <TableHeader />
-                    <TableBody />
-                </Table>
-            </React.Fragment>
+            <Table caption={caption} cells={columns} rows={rows}>
+                <TableHeader />
+                <TableBody />
+            </Table>
         );
     }
 }
@@ -78,9 +80,12 @@ class App extends React.Component {
                     </CardBody>
                 </Card>
                 <Card>
-                    <EventsTable
-                        typed_github_id={this.props.typed_github_id}
-                        history={this.props.history} />
+                    <CardHeader></CardHeader>
+                    <CardBody>
+                        <EventsTable
+                            typed_github_id={this.props.typed_github_id}
+                            history={this.props.history} />
+                    </CardBody>
                 </Card>
             </React.Fragment>
         );

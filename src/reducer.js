@@ -21,7 +21,7 @@ function fetchHistoryAction(github_id) {
 
 const initialState = {
     typed_github_id: null,
-    github_id: null,
+    github_id: '',
     history: []
 };
 
