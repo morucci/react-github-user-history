@@ -7,7 +7,7 @@ import { Title, Card, CardHeader, CardBody } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Alert } from '@patternfly/react-core';
 
-import { fetchHistoryAction } from './reducer'
+import { fetchHistoryAction } from './reducers/table'
 
 
 class SelectIdForm extends React.Component {
@@ -104,10 +104,10 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        github_id: state.github_id,
-        typed_github_id: state.typed_github_id,
-        history: state.history,
-        error_response: state.error_response
+        github_id: state.rForm.github_id,
+        typed_github_id: state.rTable.typed_github_id,
+        history: state.rTable.history,
+        error_response: state.rTable.error_response
     }
 }
 
