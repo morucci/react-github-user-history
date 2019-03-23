@@ -22,8 +22,6 @@ class SelectIdForm extends React.Component {
     }
 
     render() {
-        // TextInput is complaining about missing value setting
-        // but what value should I give as the state is in Redux ?
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup
@@ -49,6 +47,9 @@ class SelectIdForm extends React.Component {
 
 class EventsTable extends React.Component {
     render() {
+        if (this.props.loading) {
+            return (<div><b>Loading ...</b></div>)
+        }
         if ('status' in this.props.error_response) {
             const message = "Unable to fetch history. Server returned " +
                 "status: " + this.props.error_response.status + " with " +
@@ -94,6 +95,7 @@ class App extends React.Component {
                         <EventsTable
                             error_response={this.props.error_response}
                             typed_github_id={this.props.typed_github_id}
+                            loading={this.props.loading}
                             history={this.props.history} />
                     </CardBody>
                 </Card>
@@ -107,7 +109,8 @@ const mapStateToProps = state => {
         github_id: state.rForm.github_id,
         typed_github_id: state.rTable.typed_github_id,
         history: state.rTable.history,
-        error_response: state.rTable.error_response
+        error_response: state.rTable.error_response,
+        loading: state.rTable.loading
     }
 }
 
