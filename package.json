@@ -2,7 +2,7 @@
   "name": "react-github-user-history",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/morucci/react-github-user-history",
+  "homepage": "https://morucci.github.io/react-github-user-history",
   "dependencies": {
     "@patternfly/patternfly-next": "^1.0.175",
     "@patternfly/react-core": "^2.3.6",
