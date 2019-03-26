@@ -1,14 +1,14 @@
 {
-  "main.js": "/morucci/react-github-user-history/static/js/main.77236aec.chunk.js",
-  "main.js.map": "/morucci/react-github-user-history/static/js/main.77236aec.chunk.js.map",
-  "runtime~main.js": "/morucci/react-github-user-history/static/js/runtime~main.ec64915e.js",
-  "runtime~main.js.map": "/morucci/react-github-user-history/static/js/runtime~main.ec64915e.js.map",
-  "static/css/2.32323059.chunk.css": "/morucci/react-github-user-history/static/css/2.32323059.chunk.css",
-  "static/js/2.5431e0ab.chunk.js": "/morucci/react-github-user-history/static/js/2.5431e0ab.chunk.js",
-  "static/js/2.5431e0ab.chunk.js.map": "/morucci/react-github-user-history/static/js/2.5431e0ab.chunk.js.map",
-  "index.html": "/morucci/react-github-user-history/index.html",
-  "precache-manifest.d7fe11238289a5f967d733703c7ba334.js": "/morucci/react-github-user-history/precache-manifest.d7fe11238289a5f967d733703c7ba334.js",
-  "service-worker.js": "/morucci/react-github-user-history/service-worker.js",
-  "static/css/2.32323059.chunk.css.map": "/morucci/react-github-user-history/static/css/2.32323059.chunk.css.map",
-  "static/media/base.css": "/morucci/react-github-user-history/static/media/pficon.f907e666.ttf"
+  "main.js": "/react-github-user-history/static/js/main.77236aec.chunk.js",
+  "main.js.map": "/react-github-user-history/static/js/main.77236aec.chunk.js.map",
+  "runtime~main.js": "/react-github-user-history/static/js/runtime~main.a8ab507f.js",
+  "runtime~main.js.map": "/react-github-user-history/static/js/runtime~main.a8ab507f.js.map",
+  "static/css/2.230cbe01.chunk.css": "/react-github-user-history/static/css/2.230cbe01.chunk.css",
+  "static/js/2.5431e0ab.chunk.js": "/react-github-user-history/static/js/2.5431e0ab.chunk.js",
+  "static/js/2.5431e0ab.chunk.js.map": "/react-github-user-history/static/js/2.5431e0ab.chunk.js.map",
+  "index.html": "/react-github-user-history/index.html",
+  "precache-manifest.cdcd92521c8fe63499d13acbef582c22.js": "/react-github-user-history/precache-manifest.cdcd92521c8fe63499d13acbef582c22.js",
+  "service-worker.js": "/react-github-user-history/service-worker.js",
+  "static/css/2.230cbe01.chunk.css.map": "/react-github-user-history/static/css/2.230cbe01.chunk.css.map",
+  "static/media/base.css": "/react-github-user-history/static/media/pficon.f907e666.ttf"
 }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/morucci/react-github-user-history/precache-manifest.d7fe11238289a5f967d733703c7ba334.js"
+  "/react-github-user-history/precache-manifest.cdcd92521c8fe63499d13acbef582c22.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/morucci/react-github-user-history/index.html", {
+workbox.routing.registerNavigationRoute("/react-github-user-history/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
