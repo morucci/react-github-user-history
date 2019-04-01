@@ -1,4 +1,4 @@
-import { fetchHistory } from './../api'
+import { fetchHistoryPage } from './../api'
 
 const initialState = {
     typed_github_id: null,
@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
 function fetchHistoryAction(github_id) {
     return (dispatch) => {
         dispatch({type: 'FETCH_HISTORY_LOADING'});
-        return fetchHistory(github_id)
+        return fetchHistoryPage(github_id, 1)
             .then(response => {
                 dispatch(
                     {

@@ -62,9 +62,9 @@ class EventsTable extends React.Component {
             return (<div></div>)
         }
         const caption = "History of user " + this.props.typed_github_id
-        const columns = ['Event ID', 'Action Type', 'Repository']
+        const columns = ['Date', 'Event ID', 'Action Type', 'Repository']
         const rows = this.props.history.map(
-            (e) => [e.id, e.type, e.repo.name])
+            (e) => [e.created_at, e.id, e.type, e.repo.name])
         return (
             <Table caption={caption} cells={columns} rows={rows}>
                 <TableHeader />

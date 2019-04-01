@@ -1,10 +1,11 @@
 import axios from 'axios'
 
-function fetchHistory(github_id) {
-    const url = 'https://api.github.com/users/' + github_id + '/events';
+function fetchHistoryPage(github_id, page) {
+    const url = 'https://api.github.com/users/' + github_id +
+        '/events' + '?page=' + page;
     return axios.get(url)
 }
 
 export {
-    fetchHistory
+    fetchHistoryPage
 }
